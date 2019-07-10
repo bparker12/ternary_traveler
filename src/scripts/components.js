@@ -21,7 +21,15 @@ let components = {
         `
     },
     newInterestForm: function (place) {
-        return `
+        let el = document.createElement("div")
+        let divInDiv = document.createElement("div")
+        let svnBtn = document.createElement("button")
+
+        el.setAttribute("id", "input-form")
+        svnBtn.setAttribute("id", "save-btn")
+        svnBtn.textContent = "save"
+
+        divInDiv.innerHTML = `
         <fieldset>
         <legend><h3>Interest</h3></legend>
         <label for="name-input"><strong>Interest Name: </stong></label>
@@ -38,14 +46,22 @@ let components = {
         <br>
         <label for="places-input"><strong>Place : </trong></label>
         <select id="places-input">
-            <option value="${place[0].id}">${place[0].name}</option>
-            <option value="${place[1].id}">${place[1].name}</option>
-            <option value="${place[2].id}">${place[2].name}</option>
+        <option value="${place[0].id}">${place[0].name}</option>
+        <option value="${place[1].id}">${place[1].name}</option>
+        <option value="${place[2].id}">${place[2].name}</option>
         </select>
         <br>
         </fieldset>
-        <button id="save-btn">Save</button>
         `
+
+        el.appendChild(divInDiv)
+        el.appendChild(svnBtn)
+        svnBtn.addEventListener("click", () => {
+            console.log("it works!")
+        })
+        // targetContainer.appendChild(el)
+
+        return el
     },
     interestsToDom: function () {
         API.getFromApi("interests", "_expand=place")
@@ -56,20 +72,19 @@ let components = {
                 });
 
             })
-    },
-    saveInterestBtn: function () {
-        let saveBtn = document.querySelector("#save-btn")
-        saveBtn.addEventListener("click", () => {
-            console.log("saveBtn", "save button works")
-        })
+    // },
+    // saveInterestBtn: function () {
+    //     let saveBtn = document.querySelector("#save-btn")
+    //     saveBtn.addEventListener("click", () => {
+    //         // console.log("saveBtn", "save button works")
+    //     })
     },
     pushFormtoDom: function () {
         API.getFromApi("places")
             .then(info => {
                 console.log("info", info)
-                targetContainer.innerHTML = this.newInterestForm(info)
+                targetContainer.appendChild(this.newInterestForm(info))
                 // debugger
-                this.saveInterestBtn()
             })
     }
 
