@@ -1,10 +1,12 @@
 import { API } from "./api/api.js"
 import { targetContainer } from "./main.js";
+// import { event } from "./events.js"
 
 let components = {
 
     createInterestsComp: function (data) {
         return `
+        <fieldset>
         <legend><h3>Current Interests</h3></legend>
         Name: ${data.name}
         <br>
@@ -15,6 +17,7 @@ let components = {
         Review: ${data.review}
         <br>
         Place: ${data.place.name}
+        </fieldset>
         `
     },
     newInterestForm: function (place) {
@@ -40,9 +43,8 @@ let components = {
             <option value="${place[2].id}">${place[2].name}</option>
         </select>
         <br>
-        <button id="save-interest">Save</button>
         </fieldset>
-
+        <button id="save-btn">Save</button>
         `
     },
     interestsToDom: function () {
@@ -55,16 +57,22 @@ let components = {
 
             })
     },
-    pushPlacestoDom: function () {
-        API.getFromApi("places")
-        .then(info => {
-            console.log("info", info)
-            // info.forEach(data => {
-                targetContainer.innerHTML = this.newInterestForm(info)
-
-            // })
+    saveInterestBtn: function () {
+        let saveBtn = document.querySelector("#save-btn")
+        saveBtn.addEventListener("click", () => {
+            console.log("saveBtn", "save button works")
         })
+    },
+    pushFormtoDom: function () {
+        API.getFromApi("places")
+            .then(info => {
+                console.log("info", info)
+                targetContainer.innerHTML = this.newInterestForm(info)
+                // debugger
+                this.saveInterestBtn()
+            })
     }
+
 }
 
 
