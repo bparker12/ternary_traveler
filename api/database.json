@@ -22,8 +22,24 @@
       "placeId": 1,
       "name": "Local Market",
       "description": "Local market where you can purchase local products and try the local food",
-      "cost": 0.0,
+      "cost": 0,
       "review": "You can definitely get things for a lower price if you are willing to bargain!"
+    },
+    {
+      "placeId": "1",
+      "name": "Mt. Ford",
+      "description": "Mountain to climb",
+      "cost": "50",
+      "review": null,
+      "id": 2
+    },
+    {
+      "placeId": "1",
+      "name": "Colliseum",
+      "description": "Arena",
+      "cost": "30",
+      "review": null,
+      "id": 3
     }
   ]
 }

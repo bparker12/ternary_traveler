@@ -3,7 +3,7 @@ import { components } from "./components.js"
 
 let targetContainer = document.querySelector("#container")
 
-components.pushFormtoDom()
-components.interestsToDom()
+components.pushAll()
+components.saveInterestBtn(targetContainer)
 
 export { targetContainer }

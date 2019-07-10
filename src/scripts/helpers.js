@@ -1,15 +1,14 @@
 
-let helpers = {
+let helper = {
 
-    factoryFUnc: function (newInterest) {
-        return `
-        "id": ${newInterest.id},
-        "placeId": ${newInterest.place},
-        "name": ${newInterest.name},
-        "description": ${newInterest.description},
-        "cost": ${newInterest.cost},
-        "review": null
-        `
+    factoryFUnc: function (place, name, description, cost) {
+        return {
+            "placeId": place,
+            "name": name,
+            "description": description,
+            "cost": cost,
+            "review": null
+        }
     }
-
 }
+export {helper}

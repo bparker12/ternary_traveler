@@ -1,5 +1,6 @@
 import { API } from "./api/api.js"
 import { targetContainer } from "./main.js";
+import { helper } from "./helpers.js";
 // import { event } from "./events.js"
 
 let components = {
@@ -22,15 +23,13 @@ let components = {
     },
     newInterestForm: function (place) {
         let el = document.createElement("div")
-        let divInDiv = document.createElement("div")
         let svnBtn = document.createElement("button")
 
         el.setAttribute("id", "input-form")
         svnBtn.setAttribute("id", "save-btn")
         svnBtn.textContent = "save"
 
-        divInDiv.innerHTML = `
-        <fieldset>
+       let form = `
         <legend><h3>Interest</h3></legend>
         <label for="name-input"><strong>Interest Name: </stong></label>
         <input id="name-input" type="text">
@@ -51,15 +50,10 @@ let components = {
         <option value="${place[2].id}">${place[2].name}</option>
         </select>
         <br>
-        </fieldset>
         `
-
-        el.appendChild(divInDiv)
+        el.innerHTML = form
         el.appendChild(svnBtn)
-        svnBtn.addEventListener("click", () => {
-            console.log("it works!")
-        })
-        // targetContainer.appendChild(el)
+        components.saveInterestBtn(svnBtn)
 
         return el
     },
@@ -72,12 +66,25 @@ let components = {
                 });
 
             })
-    // },
-    // saveInterestBtn: function () {
-    //     let saveBtn = document.querySelector("#save-btn")
-    //     saveBtn.addEventListener("click", () => {
-    //         // console.log("saveBtn", "save button works")
-    //     })
+    },
+    saveInterestBtn: function (save) {
+        // let saveBtn = document.querySelector("#save-btn")
+        save.addEventListener("click", () => {
+            console.log("click")
+            if(event.target.id.startsWith("save")) {
+                console.log("click")
+                let name = document.querySelector("#name-input").value
+                let desc = document.querySelector("#description-input").value
+                let cost = document.querySelector("#cost-input").value
+                let placeId = document.querySelector("#places-input").value
+                let saveObj = helper.factoryFUnc(placeId, name, desc, cost)
+                API.saveToApi("interests", saveObj)
+                .then(data => {
+                    targetContainer.innerHTML = ""
+                    this.pushAll()
+                })
+            }
+        })
     },
     pushFormtoDom: function () {
         API.getFromApi("places")
@@ -85,9 +92,13 @@ let components = {
                 console.log("info", info)
                 targetContainer.appendChild(this.newInterestForm(info))
                 // debugger
+                // components.saveInterestBtn()
             })
+    },
+    pushAll: function () {
+        this.pushFormtoDom()
+        this.interestsToDom()
     }
-
 }
 
 
