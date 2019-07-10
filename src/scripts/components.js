@@ -5,6 +5,7 @@ let components = {
 
     createInterestsComp: function (data) {
         return `
+        <legend><h3>Current Interests</h3></legend>
         Name: ${data.name}
         <br>
         Description: ${data.description}
@@ -19,19 +20,29 @@ let components = {
     newInterestForm: function (place) {
         return `
         <fieldset>
-        <label for="name-input">Interest Name: </label>
+        <legend><h3>Interest</h3></legend>
+        <label for="name-input"><strong>Interest Name: </stong></label>
         <input id="name-input" type="text">
-        <label for="description-input">Interest Description: </label>
+        <br>
+        <br>
+        <label for="description-input"><strong>Interest Description: </strong></label>
         <input id="description-input" type="text">
-        <label for="cost-input">Interest Cost: </label>
+        <br>
+        <br>
+        <label for="cost-input"><strong>Interest Cost: </strong></label>
         <input id="cost-input" type="number">
-        <label for="places-input">Interest : </label>
+        <br>
+        <br>
+        <label for="places-input"><strong>Place : </trong></label>
         <select id="places-input">
-            <option value="${place.id}">${place.name}</option>
-            <option value="${place.id}">${place.name}</option>
-            <option value="${place.id}">${place.name}</option>
+            <option value="${place[0].id}">${place[0].name}</option>
+            <option value="${place[1].id}">${place[1].name}</option>
+            <option value="${place[2].id}">${place[2].name}</option>
         </select>
+        <br>
+        <button id="save-interest">Save</button>
         </fieldset>
+
         `
     },
     interestsToDom: function () {
@@ -44,6 +55,16 @@ let components = {
 
             })
     },
+    pushPlacestoDom: function () {
+        API.getFromApi("places")
+        .then(info => {
+            console.log("info", info)
+            // info.forEach(data => {
+                targetContainer.innerHTML = this.newInterestForm(info)
+
+            // })
+        })
+    }
 }
 
 
